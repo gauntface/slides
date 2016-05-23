@@ -1,14 +1,23 @@
 gf-slide {
   display: none;
+  overflow: hidden;
+}
+
+gf-slide::shadow .gf-slide__wrapper {
+  transform-origin: 0 0;
+
   /* TODO: Could this be calc? */
   /** width: 100vw;
   height: 56.25vw;**/
 
   width: 1080px;
   /* 1080 * (9/16) */
-  height: 607.5px;
+  height: calc(1080px * (9 / 16));
+
+  background: white;
+  overflow: hidden;
 }
 
 gf-slide.is-visible {
-  display: block;
+  display: inline-block;
 }

@@ -8,11 +8,14 @@ class GFSlide extends HTMLElement {
   }
 
   createdCallback() {
-    const template = componentDoc.querySelector('#template');
     const root = this.createShadowRoot();
 
+    const template = componentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
+
     root.appendChild(clone);
+
+    this._slideWrapper = this.shadowRoot.querySelector('.gf-slide__wrapper');
   }
 
   get isVisible() {
@@ -35,6 +38,12 @@ class GFSlide extends HTMLElement {
     this._pageNumber = pageNumber;
     const pageNumberElement = this.shadowRoot.querySelector('.gf-slide__page-number');
     pageNumberElement.textContent = pageNumber;
+  }
+
+  set scaleFactor(scaleFactor) {
+    this._slideWrapper.style.transform = `scale(${scaleFactor})`;
+    this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) +'px';
+    this.style.height = (SLIDE_DIMENSIONS.height * scaleFactor) +'px';
   }
 }
 
