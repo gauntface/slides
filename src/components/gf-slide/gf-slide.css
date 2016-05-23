@@ -1,6 +1,7 @@
 :host {
   display: inline-block;
   overflow: hidden;
+  transform-origin: top left;
 }
 
 .gf-slide__wrapper {

@@ -12,33 +12,45 @@ class AppController {
 
     this.numberSlides();
 
-    this.setMode(this.MODE.OVERVIEW)
-
+    if (window.location.hash.length === 0) {
+      this.setMode(this.MODE.OVERVIEW);
+    } else {
+      this.setMode(this.MODE.PRESENT);
+    }
   }
 
   numberSlides() {
     const slides = document.querySelectorAll('gf-slide');
     slides.forEach((slide, index) => {
-      slide.pageNumber = index;
+      slide.pageNumber = index + 1;
     });
   }
 
   setMode(newMode) {
-
     document.body.classList.remove('is-overview');
     document.body.classList.remove('is-presenting');
+
+    const slides = document.querySelectorAll('gf-slide');
 
     switch(newMode) {
       case this.MODE.OVERVIEW:
         const scaleFactor = 300 / SLIDE_DIMENSIONS.width;
-        const slides = document.querySelectorAll('gf-slide');
         slides.forEach((slide, index) => {
           slide.isVisible = true;
           slide.scaleFactor = scaleFactor;
+          slide.addEventListener('click', () => this.onSlideClick(index));
         });
         document.body.classList.add('is-overview');
         break;
       case this.MODE.PRESENT:
+        let indexNumber = parseInt(window.location.hash.replace('#', ''), 10);
+        if (isNaN(indexNumber)) {
+          indexNumber = 0;
+        }
+        slides.forEach((slide, index) => {
+          slide.isVisible = (index === indexNumber);
+          this.fitSlideToWindow();
+        });
         document.body.classList.add('is-presenting');
         break;
       default:
@@ -46,6 +58,18 @@ class AppController {
     };
 
     this._mode = newMode;
+  }
+
+  onSlideClick(index) {
+    console.log('On Click', index);
+    switch(this._mode) {
+      case this.MODE.OVERVIEW:
+        window.location.hash = index;
+        this.setMode(this.MODE.PRESENT);
+        break;
+      default:
+        throw Error('onSlideClick(): Unknown mode type.');
+    }
   }
 
   fitSlideToWindow() {
