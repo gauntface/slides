@@ -1,9 +1,9 @@
-gf-slide {
-  display: none;
+:host {
+  display: inline-block;
   overflow: hidden;
 }
 
-gf-slide::shadow .gf-slide__wrapper {
+.gf-slide__wrapper {
   transform-origin: 0 0;
 
   /* TODO: Could this be calc? */
@@ -16,8 +16,4 @@ gf-slide::shadow .gf-slide__wrapper {
 
   background: white;
   overflow: hidden;
-}
-
-gf-slide.is-visible {
-  display: inline-block;
 }
