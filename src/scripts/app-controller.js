@@ -5,8 +5,10 @@ class AppController {
 
   numberSlides() {
     const slides = document.querySelectorAll('gf-slide');
+    slides[0].isVisible = true;
+    
     slides.forEach((slide, index) => {
-      slide.setPageNumber(index);
+      slide.pageNumber = index;
     });
   }
 }

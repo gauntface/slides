@@ -15,7 +15,24 @@ class GFSlide extends HTMLElement {
     root.appendChild(clone);
   }
 
-  setPageNumber(pageNumber) {
+  get isVisible() {
+    return this.classList.contains('is-visible');
+  }
+
+  set isVisible(isVisible) {
+    if (isVisible){
+        this.classList.add('is-visible');
+    } else {
+      this.classList.remove('is-visible');
+    }
+  }
+
+  get pageNumber() {
+    return this._pageNumber;
+  }
+
+  set pageNumber(pageNumber) {
+    this._pageNumber = pageNumber;
     const pageNumberElement = this.shadowRoot.querySelector('.gf-slide__page-number');
     pageNumberElement.textContent = pageNumber;
   }
