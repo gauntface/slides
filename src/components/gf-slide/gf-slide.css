@@ -1,0 +1,10 @@
+gf-slide {
+  display: block;
+  /* TODO: Could this be calc? */
+  /** width: 100vw;
+  height: 56.25vw;**/
+  
+  width: 1080px;
+  /* 1080 * (9/16) */
+  height: 607.5px;
+}

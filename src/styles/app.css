@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body.is-presenting {
+  position: absolute;
+
+  background: black;
+}
+
+body.is-presenting > gf-slide {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  background: white;
+}
