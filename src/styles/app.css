@@ -22,7 +22,6 @@ html {
 
 body {
   width: 100%;
-  min-height: 100%;
 }
 
 body.is-overview {
@@ -47,6 +46,10 @@ body.is-overview gf-slide {
 
 body.is-presenting {
   position: absolute;
+
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
 
   background: var(--presentation-bg-color);
 }

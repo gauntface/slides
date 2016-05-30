@@ -1,20 +1,28 @@
 :host {
   display: inline-block;
+
   overflow: hidden;
-  transform-origin: top left;
+
+  transform-origin: 0 0;
 }
 
 .gf-slide__wrapper {
-  transform-origin: 0 0;
+  width: var(--gf__slide-width, 1920px);
+  height: var(--gf__slide-height, 1080px);
+  padding: var(--gf__slide-pading, 60px);
 
-  /* TODO: Could this be calc? */
-  /** width: 100vw;
-  height: 56.25vw;**/
-
-  width: 1080px;
-  /* 1080 * (9/16) */
-  height: calc(1080px * (9 / 16));
-
+  box-sizing: border-box;
   background: white;
   overflow: hidden;
+
+  transform-origin: 0 0;
+}
+
+.gf-slide__page-number {
+  position: fixed;
+  bottom: var(--gf__slide-pading, 60px);
+  right: var(--gf__slide-pading, 60px);
+
+  font-family: var(--gf__slide-page-number-font);
+  font-size: var(--gf__slide-page-number-font-size, 60px);
 }

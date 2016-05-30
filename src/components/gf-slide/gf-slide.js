@@ -37,6 +37,9 @@ class GFSlide extends HTMLElement {
   set pageNumber(pageNumber) {
     this._pageNumber = pageNumber;
     const pageNumberElement = this.shadowRoot.querySelector('.gf-slide__page-number');
+    if (!pageNumberElement) {
+      return;
+    }
     pageNumberElement.textContent = pageNumber;
   }
 

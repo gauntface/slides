@@ -1,6 +1,6 @@
 const SLIDE_DIMENSIONS = {
-  width: 1080,
-  height: 1080 * (9 / 16)
+  width: 1920,
+  height: 1080
 }
 
 class AppController {
@@ -47,11 +47,17 @@ class AppController {
         if (isNaN(indexNumber)) {
           indexNumber = 0;
         }
-        slides.forEach((slide, index) => {
-          slide.isVisible = (index === indexNumber);
-          this.fitSlideToWindow();
-        });
+
         document.body.classList.add('is-presenting');
+        slides.forEach((slide, index) => {
+          slide.isVisible = false;
+        });
+        this.fitSlideToWindow()
+        .then(() => {
+          slides.forEach((slide, index) => {
+            slide.isVisible = (index === indexNumber);
+          });
+        });
         break;
       default:
         throw Error('setMode(): Unknown mode type.');
@@ -73,13 +79,28 @@ class AppController {
   }
 
   fitSlideToWindow() {
-    const wScaleFactor = document.body.clientWidth / SLIDE_DIMENSIONS.width;
-    const hScaleFactor = document.body.clientHeight / SLIDE_DIMENSIONS.height;
-    const scaleFactor = Math.min(wScaleFactor, hScaleFactor);
-    const slides = document.querySelectorAll('gf-slide');
-    slides.forEach((slide, index) => {
-      slide.style.transform = `scale(${scaleFactor})`;
+    return new Promise(resolve => {
+      // Wait for body of document to be updated with new width and height
+      window.requestAnimationFrame(() => {
+        const bodyRect = document.body.getBoundingClientRect();
+
+        const wScaleFactor = bodyRect.width / SLIDE_DIMENSIONS.width;
+        const hScaleFactor = bodyRect.height / SLIDE_DIMENSIONS.height;
+
+        const scaleFactor = Math.min(wScaleFactor, hScaleFactor);
+        const slides = document.querySelectorAll('gf-slide');
+        slides.forEach((slide, index) => {
+          slide.scaleFactor = scaleFactor;
+          // slide.style.transform = `scale(${scaleFactor})`;
+        });
+
+        resolve();
+      });
     });
+  }
+
+  handleResize() {
+    this.setMode(this._mode);
   }
 }
 
@@ -90,5 +111,5 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('resize', () => {
-
+  window.GauntFace.SlideController.handleResize();
 });
