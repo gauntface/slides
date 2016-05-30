@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "description": "A simple HTML slide deck using web components",
   "scripts": {
-    "test": "mocha"
+    "eslint": "eslint ./src/**/*.js",
+    "test": "npm run eslint && mocha"
   },
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^2.11.0",
     "eslint-config-google": "^0.5.0",
     "sw-testing-helpers": "0.0.15"
   },

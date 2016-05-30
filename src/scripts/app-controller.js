@@ -1,7 +1,9 @@
+'use strict';
+
 const SLIDE_DIMENSIONS = {
   width: 1920,
   height: 1080
-}
+};
 
 class AppController {
   constructor() {
@@ -38,23 +40,24 @@ class AppController {
 
     const slides = document.querySelectorAll('gf-slide');
 
-    switch(newMode) {
-      case this.MODE.OVERVIEW:
+    switch (newMode) {
+      case this.MODE.OVERVIEW: {
         const scaleFactor = 300 / SLIDE_DIMENSIONS.width;
-        slides.forEach((slide, index) => {
+        slides.forEach(slide => {
           slide.isVisible = true;
           slide.scaleFactor = scaleFactor;
         });
         document.body.classList.add('is-overview');
         break;
-      case this.MODE.PRESENT:
+      }
+      case this.MODE.PRESENT: {
         let indexNumber = parseInt(window.location.hash.replace('#', ''), 10);
         if (isNaN(indexNumber)) {
           indexNumber = 0;
         }
 
         document.body.classList.add('is-presenting');
-        slides.forEach((slide, index) => {
+        slides.forEach(slide => {
           slide.isVisible = false;
         });
         this.fitSlideToWindow()
@@ -64,15 +67,17 @@ class AppController {
           });
         });
         break;
-      default:
+      }
+      default: {
         throw Error('setMode(): Unknown mode type.');
-    };
+      }
+    }
 
     this._mode = newMode;
   }
 
   onSlideClick(index) {
-    switch(this._mode) {
+    switch (this._mode) {
       case this.MODE.OVERVIEW:
         window.location.hash = index;
         this.setMode(this.MODE.PRESENT);
@@ -105,9 +110,8 @@ class AppController {
 
         const scaleFactor = Math.min(wScaleFactor, hScaleFactor);
         const slides = document.querySelectorAll('gf-slide');
-        slides.forEach((slide, index) => {
+        slides.forEach(slide => {
           slide.scaleFactor = scaleFactor;
-          // slide.style.transform = `scale(${scaleFactor})`;
         });
 
         resolve();
