@@ -134,12 +134,13 @@ class AppController {
               this.setMode(this.MODE.OVERVIEW);
               break;
             default:
-              document.body.style.background = 'white';
-              document.body.textContent = JSON.stringify({
-                charCode: event.charCode,
-                keyCode: event.keyCode,
-                key: event.key
-              });
+              // Disgusting selenium debug hack / trick.....
+              // document.body.style.background = 'white';
+              // document.body.textContent = JSON.stringify({
+              //   charCode: event.charCode,
+              //   keyCode: event.keyCode,
+              //   key: event.key
+              // });
               break;
           }
           return;

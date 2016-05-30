@@ -2,29 +2,39 @@
 
 body {
   font-family: 'Muli', sans-serif;
-  font-size: 64px;
-  color: #B7B8BF;
+  color: #2E334A;
   background: #9DA0AF;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Ovo', serif;
   font-weight: normal;
-  color: #8EC9D2;
 }
 
-h1 {
+.gf-container h1 {
   font-size: 120px;
 }
 
-a {
+.gf-container a {
   color: #8EC9D2;
   text-decoration: none;
 }
 
 gf-slide {
   --gf__slide-page-number-font: 'Ovo', serif;
+  color: #B7B8BF;
   background-color: #2E334A;
+  font-size: 64px;
+}
+
+gf-slide h1,h2,h3,h4,h5,h6 {
+  color: #8EC9D2;
+}
+
+body.is-overview {
+  padding-top: 80px;
+  padding-left: 60px;
+  padding-right: 60px;
 }
 
 body.is-overview gf-slide {
