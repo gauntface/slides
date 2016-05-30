@@ -28,6 +28,10 @@ class AppController {
     });
   }
 
+  getMode() {
+    return this._mode;
+  }
+
   setMode(newMode) {
     document.body.classList.remove('is-overview');
     document.body.classList.remove('is-presenting');
@@ -68,7 +72,6 @@ class AppController {
   }
 
   onSlideClick(index) {
-    console.log('On Click', index);
     switch(this._mode) {
       case this.MODE.OVERVIEW:
         window.location.hash = index;

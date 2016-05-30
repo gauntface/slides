@@ -1,0 +1,11 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "max-len": 0,
+    "no-console": 0,
+    "padded-blocks": 0
+  }
+}

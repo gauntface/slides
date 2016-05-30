@@ -1,0 +1,28 @@
+{
+  "name": "gf-slides",
+  "version": "0.0.1",
+  "description": "A simple HTML slide deck using web components",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint-config-google": "^0.5.0",
+    "sw-testing-helpers": "0.0.15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauntface/slides.git"
+  },
+  "keywords": [
+    "slides",
+    "gf-slides"
+  ],
+  "author": "Matt Gaunt",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gauntface/slides/issues"
+  },
+  "homepage": "https://github.com/gauntface/slides#readme"
+}
