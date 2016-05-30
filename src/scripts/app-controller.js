@@ -17,6 +17,8 @@ class AppController {
     } else {
       this.setMode(this.MODE.PRESENT);
     }
+
+    this.setUpKeyListeners();
   }
 
   numberSlides() {
@@ -38,7 +40,6 @@ class AppController {
         slides.forEach((slide, index) => {
           slide.isVisible = true;
           slide.scaleFactor = scaleFactor;
-          slide.addEventListener('click', () => this.onSlideClick(index));
         });
         document.body.classList.add('is-overview');
         break;
@@ -73,9 +74,21 @@ class AppController {
         window.location.hash = index;
         this.setMode(this.MODE.PRESENT);
         break;
+      case this.MODE.PRESENT:
+        index++;
+        window.location.hash = index;
+        this.setMode(this.MODE.PRESENT);
+        break;
       default:
         throw Error('onSlideClick(): Unknown mode type.');
     }
+  }
+
+  setUpKeyListeners() {
+    const slides = document.querySelectorAll('gf-slide');
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => this.onSlideClick(index));
+    });
   }
 
   fitSlideToWindow() {
