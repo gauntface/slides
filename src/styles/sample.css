@@ -2,17 +2,35 @@
 
 body {
   font-family: 'Muli', sans-serif;
+  font-size: 64px;
+  color: #B7B8BF;
+  background: #9DA0AF;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Ovo', serif;
   font-weight: normal;
+  color: #8EC9D2;
 }
 
 h1 {
   font-size: 120px;
 }
 
+a {
+  color: #8EC9D2;
+  text-decoration: none;
+}
+
 gf-slide {
   --gf__slide-page-number-font: 'Ovo', serif;
+  background-color: #2E334A;
+}
+
+body.is-overview gf-slide {
+  border-style: solid;
+  border-width: 2px;
+  box-sizing: content-box;
+
+  border-color: #696E84;
 }

@@ -11,12 +11,14 @@ class AppController {
       OVERVIEW: Symbol('MODE_OVERVIEW'),
       PRESENT: Symbol('MODE_PRESENT')
     };
+    this._currentSlide = -1;
 
     this.numberSlides();
 
     if (window.location.hash.length === 0) {
       this.setMode(this.MODE.OVERVIEW);
     } else {
+      this._currentSlide = parseInt(window.location.hash.replace('#', ''), 10);
       this.setMode(this.MODE.PRESENT);
     }
 
@@ -51,20 +53,10 @@ class AppController {
         break;
       }
       case this.MODE.PRESENT: {
-        let indexNumber = parseInt(window.location.hash.replace('#', ''), 10);
-        if (isNaN(indexNumber)) {
-          indexNumber = 0;
-        }
-
         document.body.classList.add('is-presenting');
-        slides.forEach(slide => {
-          slide.isVisible = false;
-        });
         this.fitSlideToWindow()
         .then(() => {
-          slides.forEach((slide, index) => {
-            slide.isVisible = (index === indexNumber);
-          });
+          this.goToSlide(this._currentSlide);
         });
         break;
       }
@@ -79,12 +71,11 @@ class AppController {
   onSlideClick(index) {
     switch (this._mode) {
       case this.MODE.OVERVIEW:
-        window.location.hash = index;
+        this.goToSlide(index);
         this.setMode(this.MODE.PRESENT);
         break;
       case this.MODE.PRESENT:
-        index++;
-        window.location.hash = index;
+        this.goToSlide(index + 1);
         this.setMode(this.MODE.PRESENT);
         break;
       default:
@@ -92,10 +83,68 @@ class AppController {
     }
   }
 
+  goToSlide(index) {
+    const slides = document.querySelectorAll('gf-slide');
+    if (isNaN(index) || index < 0) {
+      index = 0;
+    } else if (index >= slides.length) {
+      index = slides.length - 1;
+    }
+
+    this._currentSlide = index;
+    window.location.hash = this._currentSlide;
+
+    slides.forEach((slide, index) => {
+      slide.isVisible = (index === this._currentSlide);
+    });
+  }
+
+  moveToPrevSlide() {
+    this.goToSlide(this._currentSlide - 1);
+  }
+
+  moveToNextSlide() {
+    this.goToSlide(this._currentSlide + 1);
+  }
+
   setUpKeyListeners() {
     const slides = document.querySelectorAll('gf-slide');
     slides.forEach((slide, index) => {
       slide.addEventListener('click', () => this.onSlideClick(index));
+    });
+
+    window.addEventListener('keyup', event => {
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowLeft':
+          this.moveToPrevSlide();
+          break;
+        case 'ArrowUp':
+        case 'ArrowRight':
+          this.moveToNextSlide();
+          break;
+        case 'Escape':
+          this.setMode(this.MODE.OVERVIEW);
+          break;
+        default: {
+          // Last chance fallback - largely used for Selenium
+          switch (event.keyCode) {
+            case 27:
+              // Escape Key
+              this.setMode(this.MODE.OVERVIEW);
+              break;
+            default:
+              document.body.style.background = 'white';
+              document.body.textContent = JSON.stringify({
+                charCode: event.charCode,
+                keyCode: event.keyCode,
+                key: event.key
+              });
+              break;
+          }
+          return;
+        }
+      }
     });
   }
 

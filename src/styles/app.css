@@ -30,17 +30,10 @@ body.is-overview {
   flex-wrap: wrap;
   justify-content: space-around;
 
-  background: var(--overview-bg-color);
+
 }
 
 body.is-overview gf-slide {
-  border-style: solid;
-  border-width: 10px;
-  box-sizing: content-box;
-
-  cursor: pointer;
-
-  border-color: var(--overview-border-color);
   margin: var(--overview-padding);
 }
 
@@ -60,8 +53,6 @@ body.is-presenting {
 
 body.is-presenting > gf-slide {
   display: none;
-
-  background: white;
 }
 
 body.is-presenting > gf-slide.is-visible {
