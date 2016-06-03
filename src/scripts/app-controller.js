@@ -114,37 +114,33 @@ class AppController {
     });
 
     window.addEventListener('keyup', event => {
-      switch (event.key) {
-        case 'ArrowDown':
-        case 'ArrowLeft':
+      // Should use event.key when support is better and selenium uses it.
+      switch (event.keyCode) {
+        case 40:
+        case 37:
+          // Arrow Down
+          // Arrow Left
           this.moveToPrevSlide();
           break;
-        case 'ArrowUp':
-        case 'ArrowRight':
+        case 38:
+        case 39:
+          // Arrow UP
+          // Arrow Right
           this.moveToNextSlide();
           break;
-        case 'Escape':
+        case 27:
+          // Escape Key
           this.setMode(this.MODE.OVERVIEW);
           break;
-        default: {
-          // Last chance fallback - largely used for Selenium
-          switch (event.keyCode) {
-            case 27:
-              // Escape Key
-              this.setMode(this.MODE.OVERVIEW);
-              break;
-            default:
-              // Disgusting selenium debug hack / trick.....
-              // document.body.style.background = 'white';
-              // document.body.textContent = JSON.stringify({
-              //   charCode: event.charCode,
-              //   keyCode: event.keyCode,
-              //   key: event.key
-              // });
-              break;
-          }
-          return;
-        }
+        default:
+          // Disgusting selenium debug hack / trick.....
+          document.body.style.background = 'white';
+          document.body.textContent = JSON.stringify({
+            charCode: event.charCode,
+            keyCode: event.keyCode,
+            key: event.key
+          });
+          break;
       }
     });
   }
