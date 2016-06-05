@@ -134,12 +134,12 @@ class AppController {
           break;
         default:
           // Disgusting selenium debug hack / trick.....
-          document.body.style.background = 'white';
+          /** document.body.style.background = 'white';
           document.body.textContent = JSON.stringify({
             charCode: event.charCode,
             keyCode: event.keyCode,
             key: event.key
-          });
+          });**/
           break;
       }
     });

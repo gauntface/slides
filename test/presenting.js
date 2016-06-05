@@ -385,7 +385,15 @@ function addTestSuite(webDriverBrowser) {
 
 const discoverableBrowsers = automatedBrowserTesting.getDiscoverableBrowsers();
 discoverableBrowsers.forEach(webDriverBrowser => {
-  if (webDriverBrowser.getSeleniumBrowserId() !== 'chrome') {
+  if (webDriverBrowser.getSeleniumBrowserId() === 'opera' &&
+    webDriverBrowser.getVersionNumber() <= 37) {
+    // Opera 37 doesn't seem happy with web components
+    return;
+  }
+
+  if (webDriverBrowser.getSeleniumBrowserId() === 'firefox' &&
+    webDriverBrowser.getVersionNumber() <= 47) {
+    // There is a bug in FF 47 that prevents Marionette working - skipping;
     return;
   }
 

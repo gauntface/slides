@@ -7,14 +7,25 @@ cache:
 node_js:
   - stable
 addons:
+  # You can't install latest and beta as addons
+  firefox: latest
   apt:
     sources:
       - google-chrome
     packages:
       - google-chrome-stable
       - google-chrome-beta
-install:
+before_install:
   - npm install
+  # Get firefox beta and nightly and extract to tar for the test runner to use.
+  - ./node_modules/sw-testing-helpers/project/download/firefox-beta.sh
+  - ./node_modules/sw-testing-helpers/project/download/firefox-nightly.sh
+  # Get marionette executable
+  - if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then ./node_modules/sw-testing-helpers/project/download/get-marionette.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then wget -O - http://deb.opera.com/archive.key | sudo apt-key add -; fi
+  - if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-add-repository "deb http://deb.opera.com/opera/ stable non-free"; fi
+  - if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get update; fi
+  - if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get install opera opera-beta -y; fi
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start || echo \"Unable to start virtual display.\""

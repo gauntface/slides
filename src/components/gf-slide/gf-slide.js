@@ -1,5 +1,7 @@
 'use strict';
 
+/* global SLIDE_DIMENSIONS */
+
 const componentDoc = document.currentScript.ownerDocument;
 
 class GFSlide extends HTMLElement {
@@ -8,12 +10,16 @@ class GFSlide extends HTMLElement {
   }
 
   createdCallback() {
-    const root = this.createShadowRoot();
-
-    const template = componentDoc.querySelector('#template');
-    const clone = document.importNode(template.content, true);
-
-    root.appendChild(clone);
+    if ('attachShow' in this) {
+      const root = this.attachShadow({mode: 'open'});
+      const template = componentDoc.querySelector('#template');
+      root.appendChild(template.content.cloneNode(true));
+    } else {
+      const root = this.createShadowRoot();
+      const template = componentDoc.querySelector('#template');
+      const clone = document.importNode(template.content, true);
+      root.appendChild(clone);
+    }
 
     this._slideWrapper = this.shadowRoot.querySelector('.gf-slide__wrapper');
   }
@@ -23,8 +29,8 @@ class GFSlide extends HTMLElement {
   }
 
   set isVisible(isVisible) {
-    if (isVisible){
-        this.classList.add('is-visible');
+    if (isVisible) {
+      this.classList.add('is-visible');
     } else {
       this.classList.remove('is-visible');
     }
@@ -36,7 +42,8 @@ class GFSlide extends HTMLElement {
 
   set pageNumber(pageNumber) {
     this._pageNumber = pageNumber;
-    const pageNumberElement = this.shadowRoot.querySelector('.gf-slide__page-number');
+    const pageNumberElement = this.shadowRoot.querySelector(
+      '.gf-slide__page-number');
     if (!pageNumberElement) {
       return;
     }
@@ -45,11 +52,11 @@ class GFSlide extends HTMLElement {
 
   set scaleFactor(scaleFactor) {
     this._slideWrapper.style.transform = `scale(${scaleFactor})`;
-    this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) +'px';
-    this.style.height = (SLIDE_DIMENSIONS.height * scaleFactor) +'px';
+    this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) + 'px';
+    this.style.height = (SLIDE_DIMENSIONS.height * scaleFactor) + 'px';
   }
 }
 
 document.registerElement('gf-slide', {
-  prototype: GFSlide.prototype,
+  prototype: GFSlide.prototype
 });
