@@ -9,6 +9,7 @@
 
     <!-- Required Components -->
     <link rel="import" href="components/gf-slide/gf-slide.html" >
+    <link rel="import" href="components/gf-slide-container/gf-slide-container.html" >
 
     <link rel="stylesheet" href="styles/sample.css">
     <link rel="stylesheet" href="styles/github-corner-fork.css">
@@ -16,7 +17,7 @@
   <body>
     <h1>HTML5 Slides</h1>
 
-    <section class="gf-container">
+    <gf-slide-container>
       <gf-slide>
         <h1>&lt;gf-slide&gt;</h1>
         <p>Slide Components</p>
@@ -39,12 +40,7 @@
         <p><a href="https://gauntface.com">gauntface.com</a></p>
         <p><a href="https://twitter.com/gauntface">@gauntface</a></p>
       </gf-slide>
-    </section>
-
-    <script src="scripts/app-controller.js"></script>
-
-
-
+    </gf-slide-container>
 
     <!-- Fork Me on Github ❤️ -->
     <a href="https://github.com/gauntface/slides" class="github-corner">

@@ -11,11 +11,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-.gf-container h1 {
+gf-slide-container h1 {
   font-size: 120px;
 }
 
-.gf-container a {
+gf-slide-container a {
   color: #8EC9D2;
   text-decoration: none;
 }

@@ -2,38 +2,22 @@
 
 /* global SLIDE_DIMENSIONS */
 
-const componentDoc = document.currentScript.ownerDocument;
+const gfSlideDoc = document.currentScript.ownerDocument;
 
 class GFSlide extends HTMLElement {
-  attachedCallback() {
-    console.log('[gf-slide.js] attached()');
-  }
 
-  createdCallback() {
-    if ('attachShow' in this) {
-      const root = this.attachShadow({mode: 'open'});
-      const template = componentDoc.querySelector('#template');
-      root.appendChild(template.content.cloneNode(true));
-    } else {
-      const root = this.createShadowRoot();
-      const template = componentDoc.querySelector('#template');
-      const clone = document.importNode(template.content, true);
-      root.appendChild(clone);
-    }
+  constructor() {
+    super();
+
+    const root = this.attachShadow({mode: 'open'});
+    const template = gfSlideDoc.querySelector('#template');
+    root.appendChild(template.content.cloneNode(true));
 
     this._slideWrapper = this.shadowRoot.querySelector('.gf-slide__wrapper');
   }
 
-  get isVisible() {
-    return this.classList.contains('is-visible');
-  }
-
-  set isVisible(isVisible) {
-    if (isVisible) {
-      this.classList.add('is-visible');
-    } else {
-      this.classList.remove('is-visible');
-    }
+  connectedCallback() {
+    console.log('[gf-slide.js] connectedCallback()');
   }
 
   get pageNumber() {
@@ -50,6 +34,14 @@ class GFSlide extends HTMLElement {
     pageNumberElement.textContent = pageNumber;
   }
 
+  set isVisible(isVisible) {
+    if (isVisible) {
+      this.setAttribute('is-visible', true);
+    } else {
+      this.removeAttribute('is-visible');
+    }
+  }
+
   set scaleFactor(scaleFactor) {
     this._slideWrapper.style.transform = `scale(${scaleFactor})`;
     this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) + 'px';
@@ -57,6 +49,4 @@ class GFSlide extends HTMLElement {
   }
 }
 
-document.registerElement('gf-slide', {
-  prototype: GFSlide.prototype
-});
+window.customElements.define('gf-slide', GFSlide);
