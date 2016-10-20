@@ -54,9 +54,19 @@ body[is-overview] {
 /**
  * Container Styles
  */
- gf-slide-container[is-presenting] {
-   background: var(--presentation-bg-color);
- }
+gf-slide-container[is-presenting] {
+  background: var(--presentation-bg-color);
+}
+
+gf-slide-container[is-overview] gf-slide {
+  border-color: var(--primary-color);
+  border-style: solid;
+  border-width: 10px;
+
+  margin-bottom: var(--padding);
+
+  box-sizing: content-box;
+}
 
 /**
  * Slide Styles

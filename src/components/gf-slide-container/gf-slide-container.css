@@ -5,10 +5,6 @@ gf-slide-container[is-overview] {
   justify-content: space-between;
 }
 
-gf-slide-container[is-overview] gf-slide {
-  margin-bottom: var(--overview-padding);
-}
-
 gf-slide-container[is-presenting] {
   display: block;
 
