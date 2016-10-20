@@ -154,5 +154,10 @@ discoverableBrowsers.forEach(webDriverBrowser => {
     return;
   }
 
+  if (webDriverBrowser.getSeleniumBrowserId() !== 'chrome') {
+    // TODO: Why?
+    return;
+  }
+
   addTestSuite(webDriverBrowser);
 });
