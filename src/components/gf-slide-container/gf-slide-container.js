@@ -83,6 +83,8 @@ class GFSlideContainer extends HTMLElement {
   setMode(newMode) {
     this.removeAttribute('is-overview');
     this.removeAttribute('is-presenting');
+    document.body.removeAttribute('is-overview');
+    document.body.removeAttribute('is-presenting');
 
     const slides = this.querySelectorAll('gf-slide');
 
@@ -90,6 +92,7 @@ class GFSlideContainer extends HTMLElement {
       case VIEWING_MODE.OVERVIEW: {
         // Set this first so styles are applied to gf-slide-container first.
         this.setAttribute('is-overview', true);
+        document.body.setAttribute('is-overview', true);
 
         const scaleFactor = 300 / SLIDE_DIMENSIONS.width;
 
@@ -102,6 +105,7 @@ class GFSlideContainer extends HTMLElement {
       case VIEWING_MODE.PRESENT: {
         // Set this first so styles are applied to gf-slide-container first.
         this.setAttribute('is-presenting', true);
+        document.body.setAttribute('is-presenting', true);
         this.fitSlideInComponent()
         .then(() => {
           slides.forEach((slide, index) => {
