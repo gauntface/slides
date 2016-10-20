@@ -6,7 +6,8 @@
     "lint": "eslint '.'",
     "test": "npm run lint && node ./test/helpers/download-browsers.js && mocha"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "chromedriver": "^2.24.1",

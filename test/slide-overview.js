@@ -14,6 +14,9 @@ const TestServer = require('sw-testing-helpers').TestServer;
 function addTestSuite(webDriverBrowser) {
   describe(`Overview Mode - ${webDriverBrowser.getPrettyName()}`, function() {
     this.timeout(20000);
+    if (process.env.TRAVIS) {
+      this.retries(4);
+    }
 
     let driver;
     let testServer;
@@ -155,7 +158,7 @@ discoverableBrowsers.forEach(webDriverBrowser => {
   }
 
   if (webDriverBrowser.getSeleniumBrowserId() !== 'chrome') {
-    // TODO: Why?
+    // TODO: Polyfill isn't working well.
     return;
   }
 
