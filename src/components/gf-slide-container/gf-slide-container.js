@@ -44,7 +44,8 @@ class GFSlideContainer extends HTMLElement {
     if (window.location.hash.length === 0) {
       this.setMode(VIEWING_MODE.OVERVIEW);
     } else {
-      this._currentSlide = parseInt(window.location.hash.slice(1), 10);
+      const slideNumber = parseInt(window.location.hash.slice(1), 10);
+      this.goToSlide(slideNumber);
       this.setMode(VIEWING_MODE.PRESENT);
     }
   }

@@ -4,9 +4,11 @@ const path = require('path');
 const webdriver = require('selenium-webdriver');
 const ActionSequence = require('selenium-webdriver/lib/actions').ActionSequence;
 
+require('geckodriver');
+require('chromedriver');
 require('chai').should();
 
-const automatedBrowserTesting = require('sw-testing-helpers').automatedBrowserTesting;
+const seleniumAssistant = require('selenium-assistant');
 const TestServer = require('sw-testing-helpers').TestServer;
 
 function addTestSuite(webDriverBrowser) {
@@ -30,158 +32,115 @@ function addTestSuite(webDriverBrowser) {
     });
 
     beforeEach(function() {
-      driver = webDriverBrowser.getSeleniumDriver();
+      return webDriverBrowser.getSeleniumDriver()
+      .then(d => {
+        driver = d;
+      });
     });
 
     afterEach(function() {
       this.timeout(4000);
-      return automatedBrowserTesting.killWebDriver(driver);
+      return seleniumAssistant.killWebDriver(driver);
     });
 
-    it('should be able to open test page', function() {
-      return new Promise((resolve, reject) => {
-        driver.get(`${testServerUrl}/test/data/demo/`)
-        .then(() => {
-          driver.wait(webdriver.until.titleIs('Demo 1'), 1000);
-        })
-        .then(() => {
-          resolve();
-        })
-        .thenCatch(err => {
-          reject(err);
+    const waitForMode = () => {
+      return driver.wait(function() {
+        return driver.executeScript(function() {
+          const container = document.querySelector('gf-slide-container');
+          return container.hasAttribute('is-overview') ||
+            container.hasAttribute('is-presenting');
         });
+      });
+    };
+
+    it('should be able to open test page', function() {
+      return driver.get(`${testServerUrl}/demo/`)
+      .then(() => {
+        return driver.wait(() => {
+          return driver.executeScript(() => {
+            return document.title === '<gf-slide>';
+          });
+        }, 1000);
       });
     });
 
     it('should have a mode of overview', function() {
-      return new Promise((resolve, reject) => {
-        driver.get(`${testServerUrl}/test/data/demo/`)
-        .then(() => {
-          return driver.wait(function() {
-            return driver.executeScript(function() {
-              return (typeof window.GauntFace !== 'undefined') &&
-                (typeof window.GauntFace.SlideController !== 'undefined');
-            });
-          });
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            return document.body.classList.contains('is-overview');
-          });
-        })
-        .then(isOverviewClassOnBody => {
-          isOverviewClassOnBody.should.equal(true);
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            return window.GauntFace.SlideController.getMode() ===
-              window.GauntFace.SlideController.MODE.OVERVIEW;
-          });
-        })
-        .then(isOverviewMode => {
-          isOverviewMode.should.equal(true);
-        })
-        .then(() => {
-          resolve();
-        })
-        .thenCatch(err => {
-          reject(err);
+      return driver.get(`${testServerUrl}/demo/`)
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.body.getAttribute('is-overview');
+        });
+      })
+      .then(isOverviewClassOnBody => {
+        isOverviewClassOnBody.should.equal('true');
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-overview');
         });
       });
     });
 
     it('should go to present mode after clicking a slide', function() {
-      return new Promise((resolve, reject) => {
-        driver.get(`${testServerUrl}/test/data/demo/`)
-        .then(() => {
-          return driver.wait(function() {
-            return driver.executeScript(function() {
-              return (typeof window.GauntFace !== 'undefined') &&
-                (typeof window.GauntFace.SlideController !== 'undefined');
-            });
-          });
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            const slide = document.querySelector('gf-slide');
-            slide.click();
-            return document.body.classList.contains('is-presenting');
-          });
-        })
-        .then(isPresentingClassOnBody => {
-          isPresentingClassOnBody.should.equal(true);
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            return window.GauntFace.SlideController.getMode() ===
-              window.GauntFace.SlideController.MODE.PRESENT;
-          });
-        })
-        .then(isPresentingMode => {
-          isPresentingMode.should.equal(true);
-        })
-        .then(() => {
-          resolve();
-        })
-        .thenCatch(err => {
-          reject(err);
+      return driver.get(`${testServerUrl}/demo/`)
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          const slide = document.querySelector('gf-slide');
+          slide.click();
+          return document.body.getAttribute('is-presenting');
         });
+      })
+      .then(isPresentingClassOnBody => {
+        isPresentingClassOnBody.should.equal('true');
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-presenting');
+        });
+      })
+      .then(isPresentingMode => {
+        isPresentingMode.should.equal('true');
       });
     });
 
     it('should go to overview mode from present on clicking exit', function() {
-      return new Promise((resolve, reject) => {
-        driver.get(`${testServerUrl}/test/data/demo/#0`)
-        .then(() => {
-          return driver.wait(function() {
-            return driver.executeScript(function() {
-              return (typeof window.GauntFace !== 'undefined') &&
-                (typeof window.GauntFace.SlideController !== 'undefined');
-            });
-          });
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            return window.GauntFace.SlideController.getMode() ===
-              window.GauntFace.SlideController.MODE.PRESENT;
-          });
-        })
-        .then(isPresentingMode => {
-          isPresentingMode.should.equal(true);
-        })
-        .then(() => {
-          return new ActionSequence(driver)
-             .sendKeys(webdriver.Key.ESCAPE)
-             .perform();
-        })
-        .then(() => {
-          return driver.wait(function() {
-            return driver.executeScript(function() {
-              return document.body.classList.contains('is-overview');
-            });
-          });
-        })
-        .then(() => {
-          return driver.executeScript(function() {
-            return window.GauntFace.SlideController.getMode() ===
-              window.GauntFace.SlideController.MODE.OVERVIEW;
-          });
-        })
-        .then(isOverviewMode => {
-          isOverviewMode.should.equal(true);
-        })
-        .then(() => {
-          resolve();
-        })
-        .thenCatch(err => {
-          reject(err);
+      return driver.get(`${testServerUrl}/demo/#0`)
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
+      })
+      .then(isPresentingMode => {
+        isPresentingMode.should.equal('true');
+      })
+      .then(() => {
+        return new ActionSequence(driver)
+           .sendKeys(webdriver.Key.ESCAPE)
+           .perform();
+      })
+      .then(() => {
+        return driver.wait(function() {
+          return driver.executeScript(function() {
+            return document.querySelector('gf-slide-container').hasAttribute('is-overview');
+          });
+        });
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-overview');
+        });
+      })
+      .then(isOverviewMode => {
+        isOverviewMode.should.equal('true');
       });
     });
   });
 }
 
-const discoverableBrowsers = automatedBrowserTesting.getDiscoverableBrowsers();
+const discoverableBrowsers = seleniumAssistant.getAvailableBrowsers();
 discoverableBrowsers.forEach(webDriverBrowser => {
   if (webDriverBrowser.getSeleniumBrowserId() === 'opera' &&
     webDriverBrowser.getVersionNumber() <= 37) {
