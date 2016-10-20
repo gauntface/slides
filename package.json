@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "A simple HTML slide deck using web components",
   "scripts": {
-    "eslint": "eslint ./src/**/*.js ./test/**/.js",
-    "test": "npm run eslint && mocha"
+    "lint": "eslint '.'",
+    "test": "npm run lint && node ./test/helpers/download-browsers.js && mocha"
   },
   "dependencies": {},
   "devDependencies": {
