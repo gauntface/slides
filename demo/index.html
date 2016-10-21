@@ -44,5 +44,20 @@
         <p><a href="https://twitter.com/gauntface">@gauntface</a></p>
       </gf-slide>
     </gf-slide-container>
+
+    <script>
+    window.addEventListener('load', function() {
+      const asyncCSS = [
+        'https://fonts.googleapis.com/css?family=Lato:300,400,700,900'
+      ];
+      asyncCSS.forEach(cssUrl => {
+        const linkTag = document.createElement('link');
+        linkTag.rel = 'stylesheet';
+        linkTag.href = cssUrl;
+
+        document.head.appendChild(linkTag);
+      });
+    });
+    </script>
   </body>
 </html>

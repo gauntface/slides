@@ -42,7 +42,7 @@ function addTestSuite(webDriverBrowser) {
     });
 
     afterEach(function() {
-      this.timeout(4000);
+      this.timeout(10000);
       return seleniumAssistant.killWebDriver(driver);
     });
 
