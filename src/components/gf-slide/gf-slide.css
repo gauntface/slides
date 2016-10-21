@@ -26,3 +26,7 @@ gf-slide {
   font-family: var(--gf__slide-page-number-font);
   font-size: var(--gf__slide-page-number-font-size);
 }
+
+gf-slide [build=""] {
+  display: none;
+}

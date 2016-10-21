@@ -110,7 +110,7 @@ function addTestSuite(webDriverBrowser) {
       });
     });
 
-    it('should go to overview mode from present on clicking exit', function() {
+    it('should go to overview mode from present on clicking escape', function() {
       return driver.get(`${testServerUrl}/demo/#0`)
       .then(waitForMode)
       .then(() => {

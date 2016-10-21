@@ -280,6 +280,127 @@ function addTestSuite(webDriverBrowser) {
         isPresenting.should.equal('true');
       });
     });
+
+    it('should be able to build UI forwards', function() {
+      return driver.get(`${testServerUrl}/demo/`)
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          const slide = document.querySelector('.js-build-up');
+          slide.click();
+          return document.querySelector('gf-slide-container').getAttribute('is-presenting');
+        });
+      })
+      .then(isPresenting => {
+        isPresenting.should.equal('true');
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          const slide = document.querySelector('.js-build-up');
+          return slide.querySelectorAll('[build]').length;
+        });
+      })
+      .then(buildCount => {
+        (buildCount >= 2).should.equal(true);
+
+        const checkBuildStep = shouldEqual => {
+          let firstHash;
+          return driver.executeScript(function() {
+            return window.location.hash;
+          })
+          .then(currentHash => {
+            firstHash = currentHash;
+            return new ActionSequence(driver)
+             .sendKeys(webdriver.Key.RIGHT)
+             .perform();
+          })
+          .then(() => {
+            return driver.executeScript(function() {
+              return window.location.hash;
+            });
+          })
+          .then(newHash => {
+            if (shouldEqual) {
+              newHash.should.equal(firstHash);
+            } else {
+              newHash.should.not.equal(firstHash);
+            }
+          });
+        };
+
+        let promiseChain = Promise.resolve();
+        for (let i = 0; i < buildCount; i++) {
+          promiseChain = promiseChain.then(() => checkBuildStep(true));
+        }
+        // Final option is to handle when the hash shouldn't equal
+        promiseChain = promiseChain.then(() => checkBuildStep(false));
+        return promiseChain;
+      });
+    });
+
+    it('should be able to build UI backwards', function() {
+      return driver.get(`${testServerUrl}/demo/`)
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          const slides = document.querySelectorAll('gf-slide');
+          for (let i = 0; i < slides.length; i++) {
+            if (slides[i].classList.contains('js-build-up')) {
+              slides[i + 1].click();
+              break;
+            }
+          }
+          return document.querySelector('gf-slide-container').getAttribute('is-presenting');
+        });
+      })
+      .then(isPresenting => {
+        isPresenting.should.equal('true');
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          const slide = document.querySelector('.js-build-up');
+          return slide.querySelectorAll('[build]').length;
+        });
+      })
+      .then(buildCount => {
+        (buildCount >= 2).should.equal(true);
+
+        const checkBuildStep = shouldEqual => {
+          let firstHash;
+          return driver.executeScript(function() {
+            return window.location.hash;
+          })
+          .then(currentHash => {
+            firstHash = currentHash;
+            return new ActionSequence(driver)
+             .sendKeys(webdriver.Key.LEFT)
+             .perform();
+          })
+          .then(() => {
+            return driver.executeScript(function() {
+              return window.location.hash;
+            });
+          })
+          .then(newHash => {
+            if (shouldEqual) {
+              newHash.should.equal(firstHash);
+            } else {
+              newHash.should.not.equal(firstHash);
+            }
+          });
+        };
+
+        let promiseChain = Promise.resolve();
+
+        // First option is to handle when the hash shouldn't equal
+        promiseChain = promiseChain.then(() => checkBuildStep(false));
+
+        for (let i = 0; i < buildCount; i++) {
+          promiseChain = promiseChain.then(() => checkBuildStep(true));
+        }
+        return promiseChain;
+      });
+    });
   });
 }
 

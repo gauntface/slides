@@ -52,6 +52,38 @@ class GFSlide extends HTMLElement {
     this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) + 'px';
     this.style.height = (SLIDE_DIMENSIONS.height * scaleFactor) + 'px';
   }
+
+  performBuildForward() {
+    const buildElements = this.querySelectorAll('[build]');
+    for (let i = 0; i < buildElements.length; i++) {
+      const buildElement = buildElements[i];
+      if (buildElement.getAttribute('build') !== 'built') {
+        buildElement.setAttribute('build', 'built');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  performBuildBackwards() {
+    const buildElements = this.querySelectorAll('[build]');
+    for (let i = buildElements.length - 1; i >= 0; i--) {
+      const buildElement = buildElements[i];
+      if (buildElement.getAttribute('build') === 'built') {
+        buildElement.setAttribute('build', '');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  showAllBuilds() {
+    const buildElements = this.querySelectorAll('[build]');
+    for (let i = buildElements.length - 1; i >= 0; i--) {
+      const buildElement = buildElements[i];
+      buildElement.setAttribute('build', 'built');
+    }
+  }
 }
 
 window.customElements.define('gf-slide', GFSlide);

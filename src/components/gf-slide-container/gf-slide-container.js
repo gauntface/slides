@@ -11,7 +11,6 @@ const VIEWING_MODE = {
   OVERVIEW: Symbol('MODE_OVERVIEW'),
   PRESENT: Symbol('MODE_PRESENT')
 };
-
 class GFSlideContainer extends HTMLElement {
 
   constructor() {
@@ -29,8 +28,6 @@ class GFSlideContainer extends HTMLElement {
     window.addEventListener('resize', () => {
       this.handleResize();
     });
-
-    window.onpopstate = this.handleURLChange.bind(this);
 
     this._currentSlide = -1;
 
@@ -127,13 +124,29 @@ class GFSlideContainer extends HTMLElement {
     switch (this._mode) {
       case VIEWING_MODE.OVERVIEW:
         this.goToSlide(index);
+        this.setMode(VIEWING_MODE.PRESENT);
         break;
       case VIEWING_MODE.PRESENT:
-        this.goToSlide(index + 1);
+        this.moveToNextSlide();
         break;
       default:
         throw Error('onSlideClick(): Unknown mode type.');
     }
+  }
+
+  manageSlideTransition(previousIndex, newIndex) {
+    const slides = this.querySelectorAll('gf-slide');
+    slides.forEach((slide, index) => {
+      if (index === newIndex) {
+        if (newIndex < previousIndex) {
+          slide.showAllBuilds();
+        }
+
+        slide.isVisible = true;
+      } else {
+        slide.isVisible = false;
+      }
+    });
   }
 
   goToSlide(index) {
@@ -144,16 +157,30 @@ class GFSlideContainer extends HTMLElement {
       index = slides.length - 1;
     }
 
+    const previousSlideIndex = this._currentSlide;
+
     this._currentSlide = index;
     window.location.hash = this._currentSlide;
+
+    this.manageSlideTransition(previousSlideIndex, this._currentSlide);
   }
 
   moveToPrevSlide() {
-    this.goToSlide(this._currentSlide - 1);
+    const slides = this.querySelectorAll('gf-slide');
+    const currentSlide = slides[this._currentSlide];
+    const buildPerformed = currentSlide.performBuildBackwards();
+    if (!buildPerformed) {
+      this.goToSlide(this._currentSlide - 1);
+    }
   }
 
   moveToNextSlide() {
-    this.goToSlide(this._currentSlide + 1);
+    const slides = this.querySelectorAll('gf-slide');
+    const currentSlide = slides[this._currentSlide];
+    const buildPerformed = currentSlide.performBuildForward();
+    if (!buildPerformed) {
+      this.goToSlide(this._currentSlide + 1);
+    }
   }
 
   setUpKeyListeners() {
@@ -180,6 +207,7 @@ class GFSlideContainer extends HTMLElement {
         case 27:
           // Escape Key
           location.hash = '';
+          this.setMode(VIEWING_MODE.OVERVIEW);
           break;
         default:
           // Disgusting selenium debug hack / trick.....
