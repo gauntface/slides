@@ -22,7 +22,7 @@ class GFSlide extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('[gf-slide.js] connectedCallback()');
+    // NOOP
   }
 
   get pageNumber() {

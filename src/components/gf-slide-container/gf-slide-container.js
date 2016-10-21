@@ -21,8 +21,6 @@ class GFSlideContainer extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('[gf-slide-container.js] connectedCallback()');
-
     // TODO: Is this the right way to handle it? (i.e. no component resize)
     // TODO: How to remove this handle when component is removed
     window.addEventListener('resize', () => {
@@ -59,7 +57,7 @@ class GFSlideContainer extends HTMLElement {
   }
 
   fitSlideInComponent() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       // Wait for body of document to be updated with new width and height
       window.requestAnimationFrame(() => {
         const bodyRect = this.getBoundingClientRect();
@@ -69,7 +67,7 @@ class GFSlideContainer extends HTMLElement {
 
         const scaleFactor = Math.min(wScaleFactor, hScaleFactor);
         const slides = this.querySelectorAll('gf-slide');
-        slides.forEach(slide => {
+        slides.forEach((slide) => {
           slide.scaleFactor = scaleFactor;
         });
 
@@ -94,7 +92,7 @@ class GFSlideContainer extends HTMLElement {
 
         const scaleFactor = 300 / SLIDE_DIMENSIONS.width;
 
-        slides.forEach(slide => {
+        slides.forEach((slide) => {
           slide.isVisible = true;
           slide.scaleFactor = scaleFactor;
         });
@@ -189,7 +187,7 @@ class GFSlideContainer extends HTMLElement {
       slide.addEventListener('click', () => this.onSlideClick(index));
     });
 
-    window.addEventListener('keyup', event => {
+    window.addEventListener('keyup', (event) => {
       // Should use event.key when support is better and selenium uses it.
       switch (event.keyCode) {
         case 40:

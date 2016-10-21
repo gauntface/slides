@@ -25,20 +25,13 @@ function addTestSuite(webDriverBrowser) {
     before(function() {
       testServer = new TestServer();
       return testServer.startServer(path.join(__dirname, '..'), 8888)
-      .then(portNumber => {
+      .then((portNumber) => {
         testServerUrl = `http://localhost:${portNumber}`;
       });
     });
 
     after(function() {
       testServer.killServer();
-    });
-
-    beforeEach(function() {
-      return webDriverBrowser.getSeleniumDriver()
-      .then(d => {
-        driver = d;
-      });
     });
 
     afterEach(function() {
@@ -59,7 +52,13 @@ function addTestSuite(webDriverBrowser) {
     };
 
     it('should be able to open test page', function() {
-      return driver.get(`${testServerUrl}/demo/`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/`);
+      })
       .then(() => {
         return driver.wait(() => {
           return driver.executeScript(() => {
@@ -70,14 +69,20 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should have a mode of overview', function() {
-      return driver.get(`${testServerUrl}/demo/`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
           return document.body.getAttribute('is-overview');
         });
       })
-      .then(isOverviewClassOnBody => {
+      .then((isOverviewClassOnBody) => {
         isOverviewClassOnBody.should.equal('true');
       })
       .then(() => {
@@ -88,7 +93,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to present mode after clicking a slide', function() {
-      return driver.get(`${testServerUrl}/demo/`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -97,7 +108,7 @@ function addTestSuite(webDriverBrowser) {
           return document.body.getAttribute('is-presenting');
         });
       })
-      .then(isPresentingClassOnBody => {
+      .then((isPresentingClassOnBody) => {
         isPresentingClassOnBody.should.equal('true');
       })
       .then(() => {
@@ -105,20 +116,26 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresentingMode => {
+      .then((isPresentingMode) => {
         isPresentingMode.should.equal('true');
       });
     });
 
     it('should go to overview mode from present on clicking escape', function() {
-      return driver.get(`${testServerUrl}/demo/#0`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#0`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresentingMode => {
+      .then((isPresentingMode) => {
         isPresentingMode.should.equal('true');
       })
       .then(() => {
@@ -138,7 +155,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-overview');
         });
       })
-      .then(isOverviewMode => {
+      .then((isOverviewMode) => {
         isOverviewMode.should.equal('true');
       });
     });
@@ -146,7 +163,7 @@ function addTestSuite(webDriverBrowser) {
 }
 
 const discoverableBrowsers = seleniumAssistant.getAvailableBrowsers();
-discoverableBrowsers.forEach(webDriverBrowser => {
+discoverableBrowsers.forEach((webDriverBrowser) => {
   if (webDriverBrowser.getSeleniumBrowserId() === 'opera' &&
     webDriverBrowser.getVersionNumber() <= 37) {
     // Opera 37 doesn't seem happy with web components

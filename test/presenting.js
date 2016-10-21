@@ -25,7 +25,7 @@ function addTestSuite(webDriverBrowser) {
     before(function() {
       testServer = new TestServer();
       return testServer.startServer(path.join(__dirname, '..'), 8888)
-      .then(portNumber => {
+      .then((portNumber) => {
         testServerUrl = `http://localhost:${portNumber}`;
       });
     });
@@ -36,7 +36,7 @@ function addTestSuite(webDriverBrowser) {
 
     beforeEach(function() {
       return webDriverBrowser.getSeleniumDriver()
-      .then(d => {
+      .then((d) => {
         driver = d;
       });
     });
@@ -77,7 +77,7 @@ function addTestSuite(webDriverBrowser) {
           return document.body.getAttribute('is-presenting');
         });
       })
-      .then(isBodyPresenting => {
+      .then((isBodyPresenting) => {
         isBodyPresenting.should.equal('true');
       })
       .then(() => {
@@ -85,7 +85,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       });
     });
@@ -98,7 +98,7 @@ function addTestSuite(webDriverBrowser) {
           return document.body.getAttribute('is-presenting');
         });
       })
-      .then(isBodyPresenting => {
+      .then((isBodyPresenting) => {
         isBodyPresenting.should.equal('true');
       })
       .then(() => {
@@ -106,7 +106,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -114,7 +114,7 @@ function addTestSuite(webDriverBrowser) {
           return window.location.hash;
         });
       })
-      .then(windowHash => {
+      .then((windowHash) => {
         windowHash.should.equal('#0');
       });
     });
@@ -127,7 +127,7 @@ function addTestSuite(webDriverBrowser) {
           return document.body.getAttribute('is-presenting');
         });
       })
-      .then(isBodyPresenting => {
+      .then((isBodyPresenting) => {
         isBodyPresenting.should.equal('true');
       })
       .then(() => {
@@ -135,7 +135,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -144,7 +144,7 @@ function addTestSuite(webDriverBrowser) {
           return window.location.hash === '#' + (slides.length - 1);
         });
       })
-      .then(correctHash => {
+      .then((correctHash) => {
         correctHash.should.equal(true);
       });
     });
@@ -157,7 +157,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -177,7 +177,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       });
     });
@@ -190,7 +190,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -210,7 +210,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       });
     });
@@ -223,7 +223,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -243,7 +243,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       });
     });
@@ -256,7 +256,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -276,7 +276,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       });
     });
@@ -291,7 +291,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -300,15 +300,15 @@ function addTestSuite(webDriverBrowser) {
           return slide.querySelectorAll('[build]').length;
         });
       })
-      .then(buildCount => {
+      .then((buildCount) => {
         (buildCount >= 2).should.equal(true);
 
-        const checkBuildStep = shouldEqual => {
+        const checkBuildStep = (shouldEqual) => {
           let firstHash;
           return driver.executeScript(function() {
             return window.location.hash;
           })
-          .then(currentHash => {
+          .then((currentHash) => {
             firstHash = currentHash;
             return new ActionSequence(driver)
              .sendKeys(webdriver.Key.RIGHT)
@@ -319,7 +319,7 @@ function addTestSuite(webDriverBrowser) {
               return window.location.hash;
             });
           })
-          .then(newHash => {
+          .then((newHash) => {
             if (shouldEqual) {
               newHash.should.equal(firstHash);
             } else {
@@ -353,7 +353,7 @@ function addTestSuite(webDriverBrowser) {
           return document.querySelector('gf-slide-container').getAttribute('is-presenting');
         });
       })
-      .then(isPresenting => {
+      .then((isPresenting) => {
         isPresenting.should.equal('true');
       })
       .then(() => {
@@ -362,15 +362,15 @@ function addTestSuite(webDriverBrowser) {
           return slide.querySelectorAll('[build]').length;
         });
       })
-      .then(buildCount => {
+      .then((buildCount) => {
         (buildCount >= 2).should.equal(true);
 
-        const checkBuildStep = shouldEqual => {
+        const checkBuildStep = (shouldEqual) => {
           let firstHash;
           return driver.executeScript(function() {
             return window.location.hash;
           })
-          .then(currentHash => {
+          .then((currentHash) => {
             firstHash = currentHash;
             return new ActionSequence(driver)
              .sendKeys(webdriver.Key.LEFT)
@@ -381,7 +381,7 @@ function addTestSuite(webDriverBrowser) {
               return window.location.hash;
             });
           })
-          .then(newHash => {
+          .then((newHash) => {
             if (shouldEqual) {
               newHash.should.equal(firstHash);
             } else {
@@ -405,7 +405,7 @@ function addTestSuite(webDriverBrowser) {
 }
 
 const discoverableBrowsers = seleniumAssistant.getAvailableBrowsers();
-discoverableBrowsers.forEach(webDriverBrowser => {
+discoverableBrowsers.forEach((webDriverBrowser) => {
   if (webDriverBrowser.getSeleniumBrowserId() === 'opera' &&
     webDriverBrowser.getVersionNumber() <= 37) {
     // Opera 37 doesn't seem happy with web components
