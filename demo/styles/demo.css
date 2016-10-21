@@ -38,6 +38,10 @@ h1 {
   padding: calc(var(--padding) * 2);
 }
 
+h2 {
+  padding: calc(var(--padding) * 1.5);
+}
+
 body > header {
   text-align: center;
 }
@@ -87,6 +91,28 @@ gf-slide h1, gf-slide h2, gf-slide h3, gf-slide h4, gf-slide h5, gf-slide h6 {
   margin: 0;
 }
 
+gf-slide[fullscreen] {
+  background-image: url('../images/coffee-cup.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+gf-slide[fullscreen] main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+gf-slide[fullscreen] main h2 {
+  color: #f2f2f2;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+gf-slide[fullscreen] main h3, gf-slide[fullscreen] .gf-slide__page-number {
+  color: rgba(0, 0, 0, 0.6);
+  background-color: transparent;
+}
 
 /**
  * Title Slide
