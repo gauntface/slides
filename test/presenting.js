@@ -42,8 +42,10 @@ function addTestSuite(webDriverBrowser) {
     });
 
     afterEach(function() {
-      this.timeout(10000);
-      return seleniumAssistant.killWebDriver(driver);
+      return seleniumAssistant.killWebDriver(driver)
+      .then(() => {
+        driver = null;
+      });
     });
 
     const waitForMode = () => {
