@@ -35,6 +35,9 @@ function addTestSuite(webDriverBrowser) {
     });
 
     beforeEach(function() {
+      // Can take time to get driver
+      this.timeout(8000);
+
       return webDriverBrowser.getSeleniumDriver()
       .then((d) => {
         driver = d;
@@ -42,6 +45,9 @@ function addTestSuite(webDriverBrowser) {
     });
 
     afterEach(function() {
+      // Can take time to kill driver
+      this.timeout(10000);
+
       return seleniumAssistant.killWebDriver(driver)
       .then(() => {
         driver = null;
