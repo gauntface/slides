@@ -14,7 +14,7 @@
     "eslint": "^3.8.1",
     "eslint-config-google": "^0.7.0",
     "geckodriver": "^1.1.3",
-    "selenium-assistant": "^2.0.5",
+    "selenium-assistant": "^3.0.0",
     "selenium-webdriver": "^3.0.0-beta-3",
     "sw-testing-helpers": "^0.1.4"
   },
