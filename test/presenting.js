@@ -14,7 +14,7 @@ const TestServer = require('sw-testing-helpers').TestServer;
 function addTestSuite(webDriverBrowser) {
   describe(`Presenting Mode - ${webDriverBrowser.getPrettyName()}`, function() {
     this.timeout(20000);
-    if (process.env.TRAVIS) {
+    if (process.env.TRAVIS || process.env.RELEASE) {
       this.retries(4);
     }
 
@@ -32,16 +32,6 @@ function addTestSuite(webDriverBrowser) {
 
     after(function() {
       testServer.killServer();
-    });
-
-    beforeEach(function() {
-      // Can take time to get driver
-      this.timeout(8000);
-
-      return webDriverBrowser.getSeleniumDriver()
-      .then((d) => {
-        driver = d;
-      });
     });
 
     afterEach(function() {
@@ -65,7 +55,13 @@ function addTestSuite(webDriverBrowser) {
     };
 
     it('should be able to open test page', function() {
-      return driver.get(`${testServerUrl}/demo/#0`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#0`);
+      })
       .then(() => {
         return driver.wait(() => {
           return driver.executeScript(() => {
@@ -76,7 +72,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should have a mode of presenting', function() {
-      return driver.get(`${testServerUrl}/demo/#0`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#0`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -97,7 +99,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to slide zero for negative bad slide number', function() {
-      return driver.get(`${testServerUrl}/demo/#-1`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#-1`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -126,7 +134,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to last slide for for positive bad slide number', function() {
-      return driver.get(`${testServerUrl}/demo/#999`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#999`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -156,7 +170,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to next slide on clicking right', function() {
-      return driver.get(`${testServerUrl}/demo/#0`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#0`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -189,7 +209,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to next slide on clicking up', function() {
-      return driver.get(`${testServerUrl}/demo/#0`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#0`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -222,7 +248,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to previous slide on clicking left', function() {
-      return driver.get(`${testServerUrl}/demo/#2`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#2`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -255,7 +287,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should go to previous slide on clicking down', function() {
-      return driver.get(`${testServerUrl}/demo/#2`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#2`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -288,7 +326,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should be able to build UI forwards', function() {
-      return driver.get(`${testServerUrl}/demo/`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {
@@ -345,7 +389,13 @@ function addTestSuite(webDriverBrowser) {
     });
 
     it('should be able to build UI backwards', function() {
-      return driver.get(`${testServerUrl}/demo/`)
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/`);
+      })
       .then(waitForMode)
       .then(() => {
         return driver.executeScript(function() {

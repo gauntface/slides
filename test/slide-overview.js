@@ -14,7 +14,7 @@ const TestServer = require('sw-testing-helpers').TestServer;
 function addTestSuite(webDriverBrowser) {
   describe(`Overview Mode - ${webDriverBrowser.getPrettyName()}`, function() {
     this.timeout(20000);
-    if (process.env.TRAVIS) {
+    if (process.env.TRAVIS || process.env.RELEASE) {
       this.retries(4);
     }
 
