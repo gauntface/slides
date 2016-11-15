@@ -23,8 +23,7 @@ gf-slide {
   bottom: var(--gf__slide-pading, 60px);
   right: var(--gf__slide-pading, 60px);
 
-  font-family: var(--gf__slide-page-number-font);
-  font-size: var(--gf__slide-page-number-font-size);
+  font-size: var(--gf__slide-page-number-font-size, 48px);
 }
 
 gf-slide [build=""] {
