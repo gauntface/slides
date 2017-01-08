@@ -206,8 +206,12 @@ class GFSlideContainer extends HTMLElement {
           break;
         case 27:
           // Escape Key
-          location.hash = '';
-          this.setMode(VIEWING_MODE.OVERVIEW);
+          if (this._mode === VIEWING_MODE.OVERVIEW) {
+            this.onSlideClick(this._currentSlide);
+          } else {
+            location.hash = '';
+            this.setMode(VIEWING_MODE.OVERVIEW);
+          }
           break;
         default:
           // Disgusting selenium debug hack / trick.....

@@ -159,6 +159,65 @@ function addTestSuite(webDriverBrowser) {
         isOverviewMode.should.equal('true');
       });
     });
+
+    it('should go between overview and present mode on clicking escape', function() {
+      return webDriverBrowser.getSeleniumDriver()
+      .then((d) => {
+        driver = d;
+      })
+      .then(() => {
+        return driver.get(`${testServerUrl}/demo/#1`);
+      })
+      .then(waitForMode)
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-presenting');
+        });
+      })
+      .then((isPresentingMode) => {
+        isPresentingMode.should.equal('true');
+      })
+      .then(() => {
+        return new ActionSequence(driver)
+           .sendKeys(webdriver.Key.ESCAPE)
+           .perform();
+      })
+      .then(() => {
+        return driver.wait(function() {
+          return driver.executeScript(function() {
+            return document.querySelector('gf-slide-container').hasAttribute('is-overview');
+          });
+        });
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          return document.querySelector('gf-slide-container').getAttribute('is-overview');
+        });
+      })
+      .then((isOverviewMode) => {
+        isOverviewMode.should.equal('true');
+      })
+      .then(() => {
+        return new ActionSequence(driver)
+           .sendKeys(webdriver.Key.ESCAPE)
+           .perform();
+      })
+      .then(() => {
+        return driver.wait(function() {
+          return driver.executeScript(function() {
+            return document.querySelector('gf-slide-container').hasAttribute('is-presenting');
+          });
+        });
+      })
+      .then(() => {
+        return driver.executeScript(function() {
+          return location.hash;
+        });
+      })
+      .then((pageHash) => {
+        pageHash.should.equal('#1');
+      });
+    });
   });
 }
 

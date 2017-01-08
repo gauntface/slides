@@ -49,7 +49,8 @@ class GFSlide extends HTMLElement {
 
   set scaleFactor(scaleFactor) {
     this._slideWrapper.style.transform = `scale(${scaleFactor})`;
-    this.style.width = (SLIDE_DIMENSIONS.width * scaleFactor) + 'px';
+    this.style.width = (Math.floor(SLIDE_DIMENSIONS.width * scaleFactor))
+      + 'px';
     this.style.height = (Math.floor(SLIDE_DIMENSIONS.height * scaleFactor))
       + 'px';
   }
