@@ -7,7 +7,7 @@
   "rules": {
     "no-var": 2,
     "comma-dangle": 0,
-    "require-jsdoc": 1
+    "require-jsdoc": 0
   },
   "parserOptions": {
     "ecmaVersion": 6

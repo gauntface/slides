@@ -162,21 +162,21 @@ function addTestSuite(webDriverBrowser) {
   });
 }
 
-const discoverableBrowsers = seleniumAssistant.getAvailableBrowsers();
+const discoverableBrowsers = seleniumAssistant.getLocalBrowsers();
 discoverableBrowsers.forEach((webDriverBrowser) => {
-  if (webDriverBrowser.getSeleniumBrowserId() === 'opera' &&
+  if (webDriverBrowser.getId() === 'opera' &&
     webDriverBrowser.getVersionNumber() <= 37) {
     // Opera 37 doesn't seem happy with web components
     return;
   }
 
-  if (webDriverBrowser.getSeleniumBrowserId() === 'firefox' &&
+  if (webDriverBrowser.getId() === 'firefox' &&
     webDriverBrowser.getVersionNumber() <= 47) {
     // There is a bug in FF 47 that prevents Marionette working - skipping;
     return;
   }
 
-  if (webDriverBrowser.getSeleniumBrowserId() !== 'chrome') {
+  if (webDriverBrowser.getId() !== 'chrome') {
     // TODO: Polyfill isn't working well.
     return;
   }

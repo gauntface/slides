@@ -190,12 +190,14 @@ class GFSlideContainer extends HTMLElement {
     window.addEventListener('keyup', (event) => {
       // Should use event.key when support is better and selenium uses it.
       switch (event.keyCode) {
-        case 40:
+        case 33:
         case 37:
+        case 40:
           // Arrow Down
           // Arrow Left
           this.moveToPrevSlide();
           break;
+        case 34:
         case 38:
         case 39:
           // Arrow UP
