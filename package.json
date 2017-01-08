@@ -7,7 +7,7 @@
     "url": "https://github.com/gauntface/slides/issues"
   },
   "dependencies": {
-    "gulp-cssimport": "^4.0.1",
+    "gulp-cssimport": "^5.0.0",
     "gulp-postcss": "^6.2.0",
     "postcss-cssnext": "^2.8.0"
   },
