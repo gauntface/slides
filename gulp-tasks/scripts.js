@@ -48,7 +48,8 @@ const buildComponentJS = (relativeFilePath) => {
 };
 
 gulp.task('scripts:gf-slide-container', function() {
-  return buildComponentJS('components/gf-slide-container/gf-slide-container.js');
+  return buildComponentJS(
+    'components/gf-slide-container/gf-slide-container.js');
 });
 
 gulp.task('scripts:gf-slide', function() {
