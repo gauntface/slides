@@ -1,7 +1,7 @@
 {
   "name": "gf-slides",
   "description": "A simple HTML slide deck using custom elements",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Matt Gaunt",
   "files": [
     "build/",
