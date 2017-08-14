@@ -21,12 +21,18 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-cli": "^1.4.0",
     "gulp-cssimport": "^5.0.0",
+    "gulp-inline-source": "^3.1.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-replace": "^0.6.1",
     "gulp-rollup": "^2.5.1",
     "gulp-sourcemaps": "^2.2.0",
     "postcss-cssnext": "^2.8.0",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "rollup-stream": "^1.23.1",
     "selenium-assistant": "^5.0.2",
-    "sw-testing-helpers": "^1.0.1"
+    "sw-testing-helpers": "^1.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "homepage": "https://github.com/gauntface/slides#readme",
   "keywords": [
