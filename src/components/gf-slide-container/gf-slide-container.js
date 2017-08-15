@@ -27,6 +27,10 @@ class GFSlideContainer extends HTMLElement {
       this.handleResize();
     });
 
+    window.addEventListener('popstate', () => {
+      this.handleURLChange();
+    });
+
     this._currentSlide = -1;
 
     this.numberSlides();
