@@ -188,7 +188,16 @@ class GFSlideContainer extends HTMLElement {
   setUpKeyListeners() {
     const slides = document.querySelectorAll('gf-slide');
     slides.forEach((slide, index) => {
-      slide.addEventListener('click', () => this.onSlideClick(index));
+      slide.addEventListener('click', () => {
+        // Check if the user is selecting text and if so don't
+        // treat as a click.
+        const selection = window.getSelection();
+        if(selection.toString()) {
+          return;
+        }
+
+        this.onSlideClick(index);
+      });
     });
 
     window.addEventListener('keyup', (event) => {
