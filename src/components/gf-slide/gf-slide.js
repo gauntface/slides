@@ -2,27 +2,29 @@
 
 /* global SLIDE_DIMENSIONS */
 
-const gfSlideDoc = document.currentScript.ownerDocument;
-
 class GFSlide extends HTMLElement {
 
   constructor() {
     super();
-
-    // const shadowRoot = this.attachShadow({mode: 'open'});
-    const template = gfSlideDoc.querySelector('#template');
-    const templateClone = template.content.cloneNode(true);
-    const wrapper = templateClone.querySelector('.gf-slide__wrapper');
-    while (this.childNodes.length > 0) {
-      wrapper.appendChild(this.childNodes[0]);
-    }
-    this.appendChild(templateClone);
-
-    this._slideWrapper = this.querySelector('.gf-slide__wrapper');
   }
 
   connectedCallback() {
-    // NOOP
+    const template = document.createElement('template');
+    template.innerHTML = `
+    <style>
+      @import "/src/components/gf-slide/gf-slide.css";
+    </style>
+    <main class="gf-slide__wrapper">
+      <div class="gf-slide__page-number">
+      </div>
+    </main>`;
+    const wrapper = template.content.querySelector('.gf-slide__wrapper');
+    while (this.childNodes.length > 0) {
+      wrapper.appendChild(this.childNodes[0]);
+    }
+    this.appendChild(template);
+
+    this._slideWrapper = template.content.querySelector('.gf-slide__wrapper');
   }
 
   get pageNumber() {
@@ -88,4 +90,13 @@ class GFSlide extends HTMLElement {
   }
 }
 
-window.customElements.define('gf-slide', GFSlide);
+/** if (window.customElements) {
+  window.customElements.define('gf-slide', GFSlide);
+} else {
+  window.addEventListener('WebComponentsReady', function() {
+    window.customElements.define('gf-slide', GFSlide);
+  });
+}**/
+window.addEventListener('WebComponentsReady', function() {
+  window.customElements.define('gf-slide', GFSlide);
+});

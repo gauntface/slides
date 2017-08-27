@@ -1,7 +1,5 @@
 'use strict';
 
-const gfSlideContainerDoc = document.currentScript.ownerDocument;
-
 const SLIDE_DIMENSIONS = {
   width: 1920,
   height: 1080
@@ -15,12 +13,16 @@ class GFSlideContainer extends HTMLElement {
 
   constructor() {
     super();
-
-    const template = gfSlideContainerDoc.querySelector('#template');
-    this.appendChild(template.content.cloneNode(true));
   }
 
   connectedCallback() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+    <style>
+      @import "/src/components/gf-slide-container/gf-slide-container.css";
+    </style>`;
+    this.appendChild(template);
+
     // TODO: Is this the right way to handle it? (i.e. no component resize)
     // TODO: How to remove this handle when component is removed
     window.addEventListener('resize', () => {
@@ -240,4 +242,13 @@ class GFSlideContainer extends HTMLElement {
   }
 }
 
-window.customElements.define('gf-slide-container', GFSlideContainer);
+/** if (window.customElements) {
+  window.customElements.define('gf-slide-container', GFSlideContainer);
+} else {
+  window.addEventListener('WebComponentsReady', function() {
+    window.customElements.define('gf-slide-container', GFSlideContainer);
+  });
+}**/
+window.addEventListener('WebComponentsReady', function() {
+  window.customElements.define('gf-slide-container', GFSlideContainer);
+});
