@@ -1,11 +1,32 @@
 # Slides
 
-[![Build Status](https://travis-ci.org/gauntface/slides.svg?branch=master)](https://travis-ci.org/gauntface/slides) [![Dependency Status](https://david-dm.org/gauntface/slides.svg)](https://david-dm.org/gauntface/slides) [![devDependency Status](https://david-dm.org/gauntface/slides/dev-status.svg)](https://david-dm.org/gauntface/slides?type=dev)
+[![CI](https://github.com/gauntface/slides/actions/workflows/ci.yml/badge.svg)](https://github.com/gauntface/slides/actions/workflows/ci.yml)
 
-# Building and Running Locally
+A simple HTML slide deck that uses custom elements.
+
+## Usage
+
+```html
+<script
+  type="module"
+  src="node_modules/@gauntface/slides/build/gf-slides.js"
+></script>
+
+<gf-slides>
+  <gf-slide>
+    <h1>My First Slide</h1>
+  </gf-slide>
+</gf-slides>
+```
+
+## Building and running locally
 
 ```shell
-$ npm install
-$ gulp build
-$ npm run test
+pnpm install
+pnpm run build
+pnpm exec playwright install chromium firefox
+pnpm test
 ```
+
+To see the demo, run `pnpm exec esbuild --servedir=. --serve=8888` and open
+<http://localhost:8888/demo/>.

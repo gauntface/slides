@@ -1,25 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>&lt;gf-slide&gt;</title>
 
     <!-- Required Styles -->
-    <link rel="stylesheet" href="styles/demo.css">
+    <link rel="stylesheet" href="styles/demo.css" />
 
     <!-- Required Components -->
-    <link rel="import" href="../src/components/gf-slide/gf-slide.html" >
-    <link rel="import" href="../src/components/gf-slide-container/gf-slide-container.html" >
+    <script type="module" src="../build/gf-slides.js"></script>
   </head>
   <body>
     <header>
       <h1>&lt;gf-slide&gt;</h1>
     </header>
 
-    <p>This project has 2 custom elements providing a simple way to create a
-    web based presentation. Click on one of the slides to learn more.</p>
+    <p>
+      This project has 2 custom elements providing a simple way to create a web
+      based presentation. Click on one of the slides to learn more.
+    </p>
 
-    <gf-slide-container>
+    <gf-slides>
       <gf-slide class="title-page">
         <h1>&lt;gf-slide&gt;</h1>
         <h6 class="by">by</h6>
@@ -27,28 +28,32 @@
       </gf-slide>
 
       <gf-slide>
-        <h1>Web Componentns</h1>
+        <h1>Web Components</h1>
 
-        <p>The look and feel is seperate from behaviour by using web components.</p>
+        <p>
+          The look and feel is separate from behaviour by using web components.
+        </p>
 
         <p>1. Install the web components</p>
 
-        <pre><code>yarn install gf-slide-container gf-slide</code></pre>
+        <pre><code>npm install @gauntface/slides</code></pre>
 
         <p>Create your slide deck.</p>
 
-        <pre><code>&lt;gf-slide-container&gt;
+        <pre><code>&lt;gf-slides&gt;
   &lt;gf-slide&gt;
     &lt;h1>My First Slide&lt;/h1&gt;
   &lt;/gf-slide&gt;
-&lt;/gf-slide-container&gt;</code></pre>
+&lt;/gf-slides&gt;</code></pre>
       </gf-slide>
 
       <gf-slide class="js-build-up">
         <h1>Build Up</h1>
 
-        <p>Adding a `build` attribute will make the slide build those elements
-        in with each progression.</p>
+        <p>
+          Adding a `build` attribute will make the slide build those elements in
+          with each progression.
+        </p>
 
         <ul>
           <li build>One of these builds is a liar.</li>
@@ -63,35 +68,26 @@
       </gf-slide>
 
       <gf-slide>
-        <h1>Animate Between Slides</h1>
-        <pre>
-          <code>
-
-          </code>
-        </pre>
-      </gf-slide>
-
-      <gf-slide>
         <h1>Enjoy</h1>
         <p><a href="https://gauntface.com">gauntface.com</a></p>
         <p><a href="https://twitter.com/gauntface">@gauntface</a></p>
         <p><a href="https://github.com/gauntface/slides">Github</a></p>
       </gf-slide>
-    </gf-slide-container>
+    </gf-slides>
 
     <script>
-    window.addEventListener('load', function() {
-      const asyncCSS = [
-        'https://fonts.googleapis.com/css?family=Lato:300,400,700,900'
-      ];
-      asyncCSS.forEach(cssUrl => {
-        const linkTag = document.createElement('link');
-        linkTag.rel = 'stylesheet';
-        linkTag.href = cssUrl;
+      window.addEventListener('load', function () {
+        const asyncCSS = [
+          'https://fonts.googleapis.com/css?family=Lato:300,400,700,900',
+        ];
+        asyncCSS.forEach((cssUrl) => {
+          const linkTag = document.createElement('link');
+          linkTag.rel = 'stylesheet';
+          linkTag.href = cssUrl;
 
-        document.head.appendChild(linkTag);
+          document.head.appendChild(linkTag);
+        });
       });
-    });
     </script>
   </body>
 </html>

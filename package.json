@@ -1,53 +1,58 @@
 {
-  "name": "gf-slides",
+  "name": "@gauntface/slides",
   "description": "A simple HTML slide deck using custom elements",
   "version": "0.2.0",
   "author": "Matt Gaunt",
+  "license": "Apache-2.0",
+  "type": "module",
   "files": [
-    "build/",
-    "src/"
+    "build/"
   ],
-  "bugs": {
-    "url": "https://github.com/gauntface/slides/issues"
+  "sideEffects": true,
+  "module": "./build/gf-slides.js",
+  "types": "./build/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/types/index.d.ts",
+      "default": "./build/gf-slides.js"
+    }
   },
-  "dependencies": {},
+  "scripts": {
+    "clean": "node -e \"fs.rmSync('build', {recursive: true, force: true})\"",
+    "build": "pnpm run clean && pnpm run build:js && pnpm run build:types",
+    "build:js": "esbuild src/index.ts --bundle --format=esm --target=es2023 --minify --sourcemap --loader:.css=text --outfile=build/gf-slides.js",
+    "build:types": "tsc -p tsconfig.build.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc -p src && tsc",
+    "test": "pnpm run build && playwright test",
+    "server": "pnpm exec esbuild --servedir=. --serve=8888",
+    "prepublishOnly": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm test"
+  },
   "devDependencies": {
-    "chai": "^4.0.0",
-    "chromedriver": "^2.27.1",
-    "cssnano": "^3.8.0",
-    "eslint": "^3.10.1",
-    "eslint-config-google": "^0.7.0",
-    "geckodriver": "^1.1.3",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-cli": "^1.4.0",
-    "gulp-cssimport": "^5.0.0",
-    "gulp-inline-source": "^3.1.0",
-    "gulp-postcss": "^7.0.0",
-    "gulp-replace": "^0.6.1",
-    "gulp-rollup": "^2.5.1",
-    "gulp-sourcemaps": "^2.2.0",
-    "postcss-cssnext": "^2.8.0",
-    "rollup-plugin-uglify-es": "0.0.1",
-    "rollup-stream": "^1.23.1",
-    "selenium-assistant": "^5.0.2",
-    "sw-testing-helpers": "^1.0.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.3",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0"
   },
-  "homepage": "https://github.com/gauntface/slides#readme",
   "keywords": [
     "gf-slides",
     "slides",
     "custom elements"
   ],
-  "license": "Apache-2.0",
+  "homepage": "https://github.com/gauntface/slides#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gauntface/slides.git"
   },
-  "scripts": {
-    "lint": "eslint '.'",
-    "test": "npm run lint && node ./test/helpers/download-browsers.js && mocha",
-    "prepublish": "gulp && npm run test"
-  }
+  "bugs": {
+    "url": "https://github.com/gauntface/slides/issues"
+  },
+  "packageManager": "pnpm@12.8.1"
 }

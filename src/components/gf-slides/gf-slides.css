@@ -1,11 +1,11 @@
-gf-slide-container[is-overview] {
+gf-slides[is-overview] {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-gf-slide-container[is-presenting] {
+gf-slides[is-presenting] {
   display: block;
 
   width: 100%;
@@ -14,7 +14,7 @@ gf-slide-container[is-presenting] {
   max-height: 100%;
 }
 
-gf-slide-container[is-presenting] {
+gf-slides[is-presenting] {
   display: flex;
   position: absolute;
   top: 0;
@@ -23,10 +23,10 @@ gf-slide-container[is-presenting] {
   align-items: center;
 }
 
-gf-slide-container[is-presenting] gf-slide {
+gf-slides[is-presenting] gf-slide {
   display: none;
 }
 
-gf-slide-container[is-presenting] gf-slide[is-visible] {
+gf-slides[is-presenting] gf-slide[is-visible] {
   display: block;
 }
